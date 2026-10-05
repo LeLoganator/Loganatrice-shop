@@ -30,6 +30,57 @@ footer{padding:35px 5%;border-top:1px solid var(--line);text-align:center;color:
 .delivery-form{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:13px;font-weight:800;color:#ddd}.field input,.field select{width:100%;padding:13px;border:1px solid var(--line);border-radius:10px;background:#09090d;color:#fff;font:inherit}.field input:focus,.field select:focus{outline:2px solid #8b5cf6;border-color:#8b5cf6}.delivery-note{padding:12px;border:1px solid var(--line);border-radius:12px;background:#0b0b10;color:var(--muted);font-size:13px;line-height:1.5}.form-error{color:#fca5a5;font-size:13px;display:none;margin-top:8px}.form-error.show{display:block}
 @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.links{display:none}.detail{grid-template-columns:1fr}.detail-img,.detail-img img{min-height:350px}.detail-info{padding:25px}}
 @media(max-width:550px){.grid{grid-template-columns:1fr}.gallery{grid-template-columns:repeat(2,1fr)}.hero{padding:65px 6%}.detail-info h2{font-size:32px}.pay-options{grid-template-columns:1fr}}
+
+/* LOGANATRICE — effet rose pailleté UNIQUEMENT sur les photos/articles */
+.card .photo{
+  position:relative;
+  overflow:hidden;
+  background:#ff9bd2 !important;
+}
+.card .photo img{
+  filter:saturate(1.35) contrast(1.04);
+  transition:transform .35s ease, filter .35s ease;
+}
+.card .photo::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  background:
+    linear-gradient(135deg,
+      rgba(255,30,160,.58),
+      rgba(255,120,205,.36),
+      rgba(255,30,160,.52));
+  mix-blend-mode:color;
+}
+.card .photo::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:3;
+  pointer-events:none;
+  background-image:
+    radial-gradient(circle at 12% 18%,rgba(255,255,255,.98) 0 1.2px,transparent 2.4px),
+    radial-gradient(circle at 35% 72%,rgba(255,255,255,.9) 0 1.5px,transparent 2.8px),
+    radial-gradient(circle at 64% 28%,rgba(255,255,255,.95) 0 1px,transparent 2.2px),
+    radial-gradient(circle at 87% 82%,rgba(255,255,255,.95) 0 1.4px,transparent 2.7px),
+    radial-gradient(circle at 52% 10%,rgba(255,190,230,.95) 0 1px,transparent 2px);
+  background-size:43px 43px,57px 57px,39px 39px,61px 61px,73px 73px;
+  mix-blend-mode:screen;
+  opacity:.78;
+  animation:loganatriceGlitter 3.2s linear infinite;
+}
+.card:hover .photo img{
+  transform:scale(1.06);
+  filter:saturate(1.55) brightness(1.06) contrast(1.05);
+}
+@keyframes loganatriceGlitter{
+  0%{transform:translate3d(0,0,0);opacity:.58}
+  50%{transform:translate3d(10px,-8px,0);opacity:.95}
+  100%{transform:translate3d(0,0,0);opacity:.58}
+}
+
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -98,7 +149,7 @@ nav{background:rgba(255,240,250,.74)!important}.top{background:linear-gradient(9
     <div class="detail">
       <div class="detail-img"><img id="detailImage" src="" alt=""></div>
       <div class="detail-info">
-        <span class="tag">LOGANATOR</span>
+        <span class="tag">LOGANATRICE</span>
         <h2 id="detailName"></h2>
         <div class="detail-price" id="detailPrice"></div>
         <p id="detailCat" class="muted"></p>
@@ -268,7 +319,7 @@ function render(){
        <button class="v15-fav" onclick='event.stopPropagation();toggleFav(${JSON.stringify(p.id)})'>${fav(p.id)?"♥":"♡"}</button>
      </div>
      <div class="info">
-       <span class="tag">LOGANATOR</span>
+       <span class="tag">LOGANATRICE</span>
        <h3>${p.name}</h3>
        <div class="row"><span class="price">${price.toFixed(2)}€</span><span class="muted">${normalizeCategory(p.cat)}</span></div>
        <button class="buy" onclick='event.stopPropagation();add(${JSON.stringify(p.id)})'>AJOUTER AU PANIER</button>
@@ -298,7 +349,7 @@ update();
 
 <div class="modal" id="accountModal" onclick="if(event.target===this)closeModal('accountModal')">
 <div class="panel"><button class="close" onclick="closeModal('accountModal')">×</button>
-<div class="detail-info"><span class="tag">LOGANATOR</span><h2 id="authTitle">Connexion / création de compte</h2><div id="accountArea"></div></div></div></div>
+<div class="detail-info"><span class="tag">LOGANATRICE</span><h2 id="authTitle">Connexion / création de compte</h2><div id="accountArea"></div></div></div></div>
 <div class="admin-modal" id="premiumModal" onclick="if(event.target===this)closePremium()">
 <div class="admin-box"><button class="admin-close" onclick="closePremium()">×</button>
 <span class="premium">👑 COMPTE PREMIUM</span><h2>Centre de contrôle LOGANATOR</h2>
