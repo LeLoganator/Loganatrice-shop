@@ -1,9 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="fr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>LOGANATOR PINK — Boutique</title>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>LOGANATRICE — Boutique</title>
 <style>
 :root{--bg:#07070a;--card:#111118;--text:#fff;--muted:#aaa9b5;--accent:#8b5cf6;--line:#292936}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
@@ -30,60 +31,8 @@ footer{padding:35px 5%;border-top:1px solid var(--line);text-align:center;color:
 .delivery-form{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:13px;font-weight:800;color:#ddd}.field input,.field select{width:100%;padding:13px;border:1px solid var(--line);border-radius:10px;background:#09090d;color:#fff;font:inherit}.field input:focus,.field select:focus{outline:2px solid #8b5cf6;border-color:#8b5cf6}.delivery-note{padding:12px;border:1px solid var(--line);border-radius:12px;background:#0b0b10;color:var(--muted);font-size:13px;line-height:1.5}.form-error{color:#fca5a5;font-size:13px;display:none;margin-top:8px}.form-error.show{display:block}
 @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.links{display:none}.detail{grid-template-columns:1fr}.detail-img,.detail-img img{min-height:350px}.detail-info{padding:25px}}
 @media(max-width:550px){.grid{grid-template-columns:1fr}.gallery{grid-template-columns:repeat(2,1fr)}.hero{padding:65px 6%}.detail-info h2{font-size:32px}.pay-options{grid-template-columns:1fr}}
-
-/* LOGANATRICE — effet rose pailleté UNIQUEMENT sur les photos/articles */
-.card .photo{
-  position:relative;
-  overflow:hidden;
-  background:#ff9bd2 !important;
-}
-.card .photo img{
-  filter:saturate(1.35) contrast(1.04);
-  transition:transform .35s ease, filter .35s ease;
-}
-.card .photo::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:2;
-  pointer-events:none;
-  background:
-    linear-gradient(135deg,
-      rgba(255,30,160,.58),
-      rgba(255,120,205,.36),
-      rgba(255,30,160,.52));
-  mix-blend-mode:color;
-}
-.card .photo::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:3;
-  pointer-events:none;
-  background-image:
-    radial-gradient(circle at 12% 18%,rgba(255,255,255,.98) 0 1.2px,transparent 2.4px),
-    radial-gradient(circle at 35% 72%,rgba(255,255,255,.9) 0 1.5px,transparent 2.8px),
-    radial-gradient(circle at 64% 28%,rgba(255,255,255,.95) 0 1px,transparent 2.2px),
-    radial-gradient(circle at 87% 82%,rgba(255,255,255,.95) 0 1.4px,transparent 2.7px),
-    radial-gradient(circle at 52% 10%,rgba(255,190,230,.95) 0 1px,transparent 2px);
-  background-size:43px 43px,57px 57px,39px 39px,61px 61px,73px 73px;
-  mix-blend-mode:screen;
-  opacity:.78;
-  animation:loganatriceGlitter 3.2s linear infinite;
-}
-.card:hover .photo img{
-  transform:scale(1.06);
-  filter:saturate(1.55) brightness(1.06) contrast(1.05);
-}
-@keyframes loganatriceGlitter{
-  0%{transform:translate3d(0,0,0);opacity:.58}
-  50%{transform:translate3d(10px,-8px,0);opacity:.95}
-  100%{transform:translate3d(0,0,0);opacity:.58}
-}
-
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
 .admin-modal{position:fixed;inset:0;background:#000c;display:none;align-items:center;justify-content:center;padding:20px;z-index:300}.admin-modal.open{display:flex}.admin-box{width:min(1100px,100%);max-height:92vh;overflow:auto;background:#111118;border:1px solid #292936;border-radius:20px;padding:28px;position:relative}.admin-close{position:absolute;right:14px;top:12px;border:1px solid #292936;background:#09090d;color:#fff;border-radius:50%;width:38px;height:38px;font-size:22px;cursor:pointer}.admin-grid{display:grid;gap:12px;margin-top:18px}.admin-card{display:grid;grid-template-columns:90px 1fr auto;gap:14px;align-items:center;padding:12px;border:1px solid #292936;border-radius:14px;background:#0b0b10}.admin-card img{width:90px;height:90px;object-fit:cover;border-radius:10px}.admin-actions{display:flex;gap:8px;flex-wrap:wrap}.admin-form{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}.admin-form .full{grid-column:1/-1}.admin-form label{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:800}.admin-form input,.admin-form textarea{padding:12px;border:1px solid #292936;border-radius:10px;background:#09090d;color:#fff;font:inherit}.admin-form textarea{min-height:100px}.premium{display:inline-block;padding:6px 10px;border-radius:999px;background:#2a1646;color:#d8b4fe;font-weight:900;font-size:12px}.admin-msg{margin-top:12px;padding:11px;border-radius:10px;background:#0b0b10;color:#aaa9b5}.admin-msg.ok{color:#86efac}.admin-msg.err{color:#fda4af}@media(max-width:700px){.admin-card{grid-template-columns:65px 1fr}.admin-card img{width:65px;height:65px}.admin-actions{grid-column:1/-1}.admin-form{grid-template-columns:1fr}.admin-form .full{grid-column:auto}}
 </style>
@@ -105,94 +54,68 @@ footer{padding:35px 5%;border-top:1px solid var(--line);text-align:center;color:
 @media(max-width:850px){.v16-kpis{grid-template-columns:repeat(2,1fr)}.v16-two,.v16-form{grid-template-columns:1fr}.v16-form .full{grid-column:auto}}
 @media(max-width:520px){.v16-kpis{grid-template-columns:1fr}.v16-check{grid-template-columns:1fr}}
 </style>
-
-<style id="v17-pink-ui">
-:root{--bg:#fff0fa;--card:rgba(255,255,255,.68);--text:#5a1740;--muted:#9d6485;--accent:#ff4fb3;--line:rgba(226,77,155,.22)}
-body{background:radial-gradient(circle at 10% 8%,rgba(255,102,190,.28),transparent 28%),radial-gradient(circle at 90% 25%,rgba(255,210,239,.72),transparent 30%),linear-gradient(135deg,#fff4fb,#ffe2f3 50%,#fff7fc);color:var(--text)}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.25;background-image:radial-gradient(circle,rgba(255,255,255,.95) 0 1px,transparent 1.5px);background-size:18px 18px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.9),transparent 80%)}
-nav,.card,.drop,.panel,.admin-box,.v15-stat,.v16-box,.v15-cart-row,.delivery-note,.v16-preview,.v16-alert{background:rgba(255,255,255,.58)!important;backdrop-filter:blur(22px) saturate(145%);-webkit-backdrop-filter:blur(22px) saturate(145%);border-color:rgba(255,105,181,.24)!important;box-shadow:0 18px 50px rgba(214,63,142,.14),inset 0 1px 0 rgba(255,255,255,.85)}
-nav{background:rgba(255,240,250,.74)!important}.top{background:linear-gradient(90deg,#ff4fb3,#ff86ca,#ff4fb3);color:#fff}.links a{color:#7b2858}.logo{color:#ef319b;text-shadow:0 2px 16px rgba(255,71,177,.25)}
-.hero{background:radial-gradient(circle at 80% 30%,rgba(255,64,174,.34),transparent 35%),radial-gradient(circle at 15% 70%,rgba(255,194,227,.75),transparent 35%)}.kicker,.tag{color:#e52d96!important}.hero p,.muted{color:#9d6485}.btn,.v15-filter,.v16-tab,.pay-option,.v15-size-btn,.close,.admin-close{background:rgba(255,255,255,.55)!important;border-color:rgba(226,77,155,.25)!important;color:#7b2858!important}.primary{background:linear-gradient(135deg,#ff3da8,#ff83c9,#ff4fb3)!important;box-shadow:0 12px 32px rgba(255,61,168,.3)}
-.card{position:relative;transform-style:preserve-3d;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}.card:hover{box-shadow:0 28px 65px rgba(213,52,139,.22),inset 0 1px 0 rgba(255,255,255,.95);border-color:rgba(255,61,168,.45)!important}.photo{isolation:isolate;background:linear-gradient(135deg,#ffd8ee,#fff)}.photo:after{content:"";position:absolute;inset:-30%;pointer-events:none;opacity:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.85),rgba(255,128,201,.28) 12%,transparent 30%);mix-blend-mode:screen;transition:opacity .2s}.card:hover .photo:after{opacity:1}.photo img{transition:transform .45s cubic-bezier(.2,.8,.2,1),filter .35s}.card:hover .photo img{transform:scale(1.08);filter:saturate(1.12) brightness(1.05)}
-.buy{background:linear-gradient(135deg,#ff4fb3,#ff87cb)!important;color:#fff!important;box-shadow:0 9px 24px rgba(255,79,179,.22)}
-.field input,.field select,.admin-form input,.admin-form textarea,.v15-search,.v16-form input,.v16-form select,.v16-form textarea{background:rgba(255,255,255,.65)!important;border-color:rgba(226,77,155,.22)!important;color:#6e244e!important}
-.v15-filter.active,.v16-tab.active,.pay-option.selected,.v15-size-btn.selected{background:rgba(255,96,185,.18)!important;border-color:#ff4fb3!important;color:#8a205a!important}.premium{background:#ffd1e9;color:#c31d7c}.v16-preview{border-color:#ff69b5}.v16-publish{background:rgba(255,240,250,.78)!important}
-@media(max-width:700px){.card{transform:none!important}.photo:after{display:none}}
-</style>
-<script>
-(function(){function init(){document.querySelectorAll('.card').forEach(function(card){var photo=card.querySelector('.photo');if(!photo||card.dataset.v17glass)return;card.dataset.v17glass='1';card.addEventListener('pointermove',function(e){if(e.pointerType==='touch')return;var r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;card.style.transform='perspective(900px) rotateX('+((.5-y)*5).toFixed(2)+'deg) rotateY('+((x-.5)*5).toFixed(2)+'deg) translateY(-5px)';photo.style.setProperty('--mx',(x*100).toFixed(1)+'%');photo.style.setProperty('--my',(y*100).toFixed(1)+'%')});card.addEventListener('pointerleave',function(){card.style.transform='';photo.style.setProperty('--mx','50%');photo.style.setProperty('--my','50%')})})}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();window.v17InitGlass=init})();
-</script>
-
 </head>
 <body>
 <div class="top">🚚 LIVRAISON OFFERTE À PARTIR DE 80€</div>
-<nav><div class="logo">LOGANATOR</div><div class="links"><a href="#shop">SHOP</a><a href="#drop">DROP</a><a href="#vetements">VÊTEMENTS</a></div><div style="display:flex;gap:8px;align-items:center"><button class="btn" id="accountBtn" onclick="openAccount()">👤 COMPTE</button><button class="btn" onclick="showCart()">🛒 <span id="count">0</span></button></div></nav>
-
-<section class="hero"><div><div class="kicker">LOGANATOR PINK SHOP</div><h1>PORTE TON<br>LOGANATOR.</h1><p>La boutique LOGANATOR en version rose, brillante et pleine de paillettes.</p><button class="primary" onclick="document.querySelector('#shop').scrollIntoView({behavior:'smooth'})">VOIR LA COLLECTION ↓</button></div></section>
-
-<section class="section" id="drop"><div class="drop"><div class="kicker">DROP #01</div><h2>PINK COLLECTION</h2><p class="muted">Hoodie, doudoune, baggy et chaussures.</p></div></section>
-
+<nav><div class="logo">LOGANATRICE</div><div class="links"><a href="#shop">SHOP</a><a href="#drop">DROP</a><a href="#vetements">VÊTEMENTS</a></div><div style="display:flex;gap:8px;align-items:center"><button class="btn" id="accountBtn" onclick="openAccount()">👤 COMPTE</button><button class="btn" onclick="showCart()">🛒 <span id="count">0</span></button></div></nav>
+<section class="hero"><div><div class="kicker">LOGANATRICE SHOP</div><h1>PORTE TON<br/>LOGANATRICE.</h1><p>La boutique de la chaîne, avec les vraies photos de tes créations.</p><button class="primary" onclick="document.querySelector('#shop').scrollIntoView({behavior:'smooth'})">VOIR LA COLLECTION ↓</button></div></section>
+<section class="section" id="drop"><div class="drop"><div class="kicker">DROP #01</div><h2>LOGANATRICE COLLECTION</h2><p class="muted">Hoodie, doudoune, baggy et chaussures.</p></div></section>
 <section class="section" id="shop"><h2>La collection</h2>
-<div class="v15-toolbar"><input id="v15Search" class="v15-search" type="search" placeholder="🔎 Rechercher un produit...">
+<div class="v15-toolbar"><input class="v15-search" id="v15Search" placeholder="🔎 Rechercher un produit..." type="search"/>
 <div class="v15-filters" id="v15Filters">
 <button class="v15-filter active" data-filter="Tous">TOUS</button><button class="v15-filter" data-filter="Hauts">HAUTS</button>
 <button class="v15-filter" data-filter="Doudounes">DOUDOUNES</button><button class="v15-filter" data-filter="Bas">BAS</button><button class="v15-filter" data-filter="Chaussures">CHAUSSURES</button>
-</div><span id="v15ResultCount" class="muted" style="white-space:nowrap">0 produit</span></div><div class="grid" id="grid"></div></section>
-
+</div><span class="muted" id="v15ResultCount" style="white-space:nowrap">0 produit</span></div><div class="grid" id="grid"></div></section>
 <section class="section" id="vetements"><h2>Tes vêtements 👕</h2><p class="muted">Clique sur un vêtement pour voir la grande image et tous ses détails.</p><div class="gallery" id="gallery"></div></section>
-
-<footer>© 2026 LOGANATOR — Boutique officielle</footer>
-
+<footer>© 2026 LOGANATRICE — Boutique officielle</footer>
 <div class="modal" id="detailModal" onclick="if(event.target===this)closeModal('detailModal')">
-  <div class="panel">
-    <button class="close" onclick="closeModal('detailModal')">×</button>
-    <div class="detail">
-      <div class="detail-img"><img id="detailImage" src="" alt=""></div>
-      <div class="detail-info">
-        <span class="tag">LOGANATRICE</span>
-        <h2 id="detailName"></h2>
-        <div class="detail-price" id="detailPrice"></div>
-        <p id="detailCat" class="muted"></p>
-        <ul id="detailList" class="detail-list"></ul>
-        <div class="v15-size"><label>TAILLE</label><div class="v15-sizes" id="v15Sizes"></div></div>
-        <button class="primary" style="width:100%;margin-top:12px" id="detailAdd">AJOUTER AU PANIER 🛒</button>
-        <button class="buy" style="margin-top:10px" id="detailBuy">ACHETER / CHOISIR LE PAIEMENT</button>
-      </div>
-    </div>
-  </div>
+<div class="panel">
+<button class="close" onclick="closeModal('detailModal')">×</button>
+<div class="detail">
+<div class="detail-img"><img alt="" id="detailImage" src=""/></div>
+<div class="detail-info">
+<span class="tag">LOGANATRICE</span>
+<h2 id="detailName"></h2>
+<div class="detail-price" id="detailPrice"></div>
+<p class="muted" id="detailCat"></p>
+<ul class="detail-list" id="detailList"></ul>
+<div class="v15-size"><label>TAILLE</label><div class="v15-sizes" id="v15Sizes"></div></div>
+<button class="primary" id="detailAdd" style="width:100%;margin-top:12px">AJOUTER AU PANIER 🛒</button>
+<button class="buy" id="detailBuy" style="margin-top:10px">ACHETER / CHOISIR LE PAIEMENT</button>
 </div>
-
+</div>
+</div>
+</div>
 <div class="modal" id="checkoutModal" onclick="if(event.target===this)closeModal('checkoutModal')">
-  <div class="panel">
-    <button class="close" onclick="closeModal('checkoutModal')">×</button>
-    <div class="detail-info">
-      <span class="tag">COMMANDE LOGANATOR</span>
-      <h2>Mode de paiement</h2>
-      <p class="muted">Choisis un mode de paiement pour la démonstration du checkout.</p>
-      <div id="checkoutItems" class="v15-cart-list"></div>
-      <div id="v15Shipping" class="v15-shipping"></div>
-      <div class="v15-cart-total"><span>TOTAL</span><span id="checkoutTotal"></span></div>
-      <h3>📦 Où doit-on livrer ?</h3>
-      <div class="delivery-form">
-        <div class="field"><label for="firstName">Prénom</label><input id="firstName" autocomplete="given-name" placeholder="Logan"></div>
-        <div class="field"><label for="lastName">Nom</label><input id="lastName" autocomplete="family-name" placeholder="Nom"></div>
-        <div class="field full"><label for="address">Adresse</label><input id="address" autocomplete="street-address" placeholder="12 rue Exemple"></div>
-        <div class="field"><label for="postcode">Code postal</label><input id="postcode" inputmode="numeric" autocomplete="postal-code" placeholder="75000"></div>
-        <div class="field"><label for="city">Ville</label><input id="city" autocomplete="address-level2" placeholder="Paris"></div>
-        <div class="field full"><label for="country">Pays</label><select id="country"><option>France</option><option>Belgique</option><option>Suisse</option><option>Luxembourg</option><option>Autre</option></select></div>
-      </div>
-      <div class="delivery-note">🚚 Les informations de livraison sont utilisées uniquement pour préparer la commande dans cette démonstration.</div>
-      <div id="formError" class="form-error">Remplis les champs obligatoires avant de continuer.</div>
-      <div class="pay-options">
-        <button class="pay-option selected" data-pay="Carte bancaire">💳 Carte bancaire</button>
-        <button class="pay-option" data-pay="PayPal">🅿️ PayPal</button>
-      </div>
-      <button class="primary" style="width:100%" onclick="finishCheckout()">CONTINUER</button>
-      <p class="note">⚠️ Le paiement réel n'est pas connecté dans cette version. Pour encaisser réellement des commandes, il faudra connecter un prestataire de paiement et les informations légales de la boutique.</p>
-    </div>
-  </div>
+<div class="panel">
+<button class="close" onclick="closeModal('checkoutModal')">×</button>
+<div class="detail-info">
+<span class="tag">COMMANDE LOGANATRICE</span>
+<h2>Mode de paiement</h2>
+<p class="muted">Choisis un mode de paiement pour la démonstration du checkout.</p>
+<div class="v15-cart-list" id="checkoutItems"></div>
+<div class="v15-shipping" id="v15Shipping"></div>
+<div class="v15-cart-total"><span>TOTAL</span><span id="checkoutTotal"></span></div>
+<h3>📦 Où doit-on livrer ?</h3>
+<div class="delivery-form">
+<div class="field"><label for="firstName">Prénom</label><input autocomplete="given-name" id="firstName" placeholder="Logan"/></div>
+<div class="field"><label for="lastName">Nom</label><input autocomplete="family-name" id="lastName" placeholder="Nom"/></div>
+<div class="field full"><label for="address">Adresse</label><input autocomplete="street-address" id="address" placeholder="12 rue Exemple"/></div>
+<div class="field"><label for="postcode">Code postal</label><input autocomplete="postal-code" id="postcode" inputmode="numeric" placeholder="75000"/></div>
+<div class="field"><label for="city">Ville</label><input autocomplete="address-level2" id="city" placeholder="Paris"/></div>
+<div class="field full"><label for="country">Pays</label><select id="country"><option>France</option><option>Belgique</option><option>Suisse</option><option>Luxembourg</option><option>Autre</option></select></div>
 </div>
-
+<div class="delivery-note">🚚 Les informations de livraison sont utilisées uniquement pour préparer la commande dans cette démonstration.</div>
+<div class="form-error" id="formError">Remplis les champs obligatoires avant de continuer.</div>
+<div class="pay-options">
+<button class="pay-option selected" data-pay="Carte bancaire">💳 Carte bancaire</button>
+<button class="pay-option" data-pay="PayPal">🅿️ PayPal</button>
+</div>
+<button class="primary" onclick="finishCheckout()" style="width:100%">CONTINUER</button>
+<p class="note">⚠️ Le paiement réel n'est pas connecté dans cette version. Pour encaisser réellement des commandes, il faudra connecter un prestataire de paiement et les informations légales de la boutique.</p>
+</div>
+</div>
+</div>
 <script>
 const products=[
 {id:1,name:"Hoodie LOGANATOR",price:49.9,cat:"Hauts",image:"photo-5.jpg",details:["Hoodie LOGANATOR","Design officiel LOGANATOR","Photo produit incluse","Tailles à définir"]},
@@ -319,7 +242,7 @@ function render(){
        <button class="v15-fav" onclick='event.stopPropagation();toggleFav(${JSON.stringify(p.id)})'>${fav(p.id)?"♥":"♡"}</button>
      </div>
      <div class="info">
-       <span class="tag">LOGANATRICE</span>
+       <span class="tag">LOGANATOR</span>
        <h3>${p.name}</h3>
        <div class="row"><span class="price">${price.toFixed(2)}€</span><span class="muted">${normalizeCategory(p.cat)}</span></div>
        <button class="buy" onclick='event.stopPropagation();add(${JSON.stringify(p.id)})'>AJOUTER AU PANIER</button>
@@ -346,26 +269,25 @@ document.querySelectorAll('.pay-option').forEach(b=>b.addEventListener('click',(
 render();
 update();
 </script>
-
 <div class="modal" id="accountModal" onclick="if(event.target===this)closeModal('accountModal')">
 <div class="panel"><button class="close" onclick="closeModal('accountModal')">×</button>
 <div class="detail-info"><span class="tag">LOGANATRICE</span><h2 id="authTitle">Connexion / création de compte</h2><div id="accountArea"></div></div></div></div>
 <div class="admin-modal" id="premiumModal" onclick="if(event.target===this)closePremium()">
 <div class="admin-box"><button class="admin-close" onclick="closePremium()">×</button>
-<span class="premium">👑 COMPTE PREMIUM</span><h2>Centre de contrôle LOGANATOR</h2>
+<span class="premium">👑 COMPTE PREMIUM</span><h2>Centre de contrôle LOGANATRICE</h2>
 <p class="muted">Gestion produits, site, promotions, commandes, membres et statistiques.</p>
-<div id="premiumMsg" class="admin-msg">Chargement…</div>
+<div class="admin-msg" id="premiumMsg">Chargement…</div>
 <div class="v16-tabs">
-<button class="v16-tab active" data-v16-tab="overview">📊 Vue d'ensemble</button><button class="v16-tab" data-v16-tab="products">🛍️ Produits</button><button class="v16-tab" data-v16-tab="site">🎨 Site & brouillon</button><button class="v16-tab" data-v16-tab="promos">🏷️ Promotions</button><button class="v16-tab" data-v16-tab="orders">📦 Commandes</button><button class="v16-tab" data-v16-tab="members">👥 Membres</button><button class="v16-tab" data-v16-tab="tools">🧠 Outils</button></div>
-<section class="v16-section active" data-v16-section="overview"><div class="v16-kpis"><div class="v16-kpi">Visites<b id="v16Visits">0</b></div><div class="v16-kpi">Vues produits<b id="v16Views">0</b></div><div class="v16-kpi">Ajouts panier<b id="v16Adds">0</b></div><div class="v16-kpi">Commandes<b id="v16Orders">0</b></div></div><div class="v16-two"><div class="v16-box"><h3>🔥 Produits populaires</h3><div id="v16Popular" class="v16-list"></div></div><div class="v16-box"><h3>⚠️ Alertes</h3><div id="v16Alerts"></div></div></div><div class="v16-box"><h3>📈 Activité récente</h3><div id="v16Recent" class="v16-list"></div></div></section>
-<section class="v16-section" data-v16-section="products"><div class="admin-actions"><button class="primary" onclick="newPremiumProduct()">➕ Ajouter un produit</button><button class="btn" onclick="v16RefreshProducts()">🔄 Actualiser</button><button class="btn" onclick="v16ExportCatalogCSV()">📊 Exporter CSV</button><button class="btn" onclick="v16ExportBackup()">💾 Sauvegarder la boutique</button><button class="btn" onclick="document.getElementById('v16BackupFile').click()">📥 Restaurer une sauvegarde</button><input id="v16BackupFile" type="file" accept="application/json,.json" style="display:none" onchange="v16ImportBackup(event)"></div><p class="v16-help">Les modifications locales et les sauvegardes sont enregistrées dans ce navigateur. Elles ne sont pas automatiquement synchronisées avec les autres appareils ou visiteurs.</p><div id="premiumList" class="admin-grid"></div></section>
-<section class="v16-section" data-v16-section="site"><div class="v16-box"><h3>✏️ Contenu du site</h3><div class="v16-form"><label>Titre HERO<input id="v16HeroTitle" placeholder="PORTE TON LOGANATOR."></label><label>Sous-titre<input id="v16HeroText" placeholder="La boutique officielle…"></label><label>Bouton principal<input id="v16HeroButton" placeholder="VOIR LA COLLECTION"></label><label>Texte bannière<input id="v16BannerText" placeholder="LIVRAISON OFFERTE…"></label><label class="full">Message DROP<textarea id="v16DropText"></textarea></label></div></div><div class="v16-box"><h3>🧩 Sections</h3><div class="v16-switch"><span>Afficher les nouveautés</span><input id="v16ShowNew" type="checkbox" checked></div><div class="v16-switch"><span>Afficher les populaires</span><input id="v16ShowPopular" type="checkbox" checked></div><div class="v16-switch"><span>Afficher les promotions</span><input id="v16ShowPromos" type="checkbox" checked></div><div class="v16-switch"><span>Afficher le DROP</span><input id="v16ShowDrop" type="checkbox" checked></div></div><div class="v16-preview"><b>👁️ Prévisualisation</b><h2 id="v16PreviewTitle">PORTE TON LOGANATOR.</h2><p id="v16PreviewText" class="muted">La boutique officielle LOGANATOR.</p><button class="primary" id="v16PreviewButton">VOIR LA COLLECTION</button></div><div class="v16-publish"><button class="btn" onclick="v16SaveDraft()">💾 Enregistrer brouillon</button><button class="primary" onclick="v16PublishDraft()">🚀 Publier</button></div></section>
-<section class="v16-section" data-v16-section="promos"><div class="v16-box"><h3>🏷️ Créer un code promo</h3><div class="v16-form"><label>Code<input id="v16PromoCode" placeholder="LOGAN10"></label><label>Type<select id="v16PromoType"><option value="percent">Pourcentage</option><option value="fixed">Montant fixe</option></select></label><label>Valeur<input id="v16PromoValue" type="number" min="0" step="0.01"></label><label>Minimum d'achat<input id="v16PromoMin" type="number" min="0" step="0.01"></label><label>Date de début<input id="v16PromoStart" type="datetime-local"></label><label>Date de fin<input id="v16PromoEnd" type="datetime-local"></label><label>Limite d'utilisations<input id="v16PromoMax" type="number" min="1"></label><button class="primary full" onclick="v16CreatePromo()">➕ Créer le code</button></div></div><div class="v16-box"><h3>Codes existants</h3><div id="v16PromoList" class="v16-list"></div></div></section>
+<button class="v16-tab active" data-v16-tab="overview">📊 Vue d'ensemble</button><button class="v16-tab" data-v16-tab="products">🛍️ Produits</button><button class="v16-tab" data-v16-tab="site">🎨 Site &amp; brouillon</button><button class="v16-tab" data-v16-tab="promos">🏷️ Promotions</button><button class="v16-tab" data-v16-tab="orders">📦 Commandes</button><button class="v16-tab" data-v16-tab="members">👥 Membres</button><button class="v16-tab" data-v16-tab="tools">🧠 Outils</button></div>
+<section class="v16-section active" data-v16-section="overview"><div class="v16-kpis"><div class="v16-kpi">Visites<b id="v16Visits">0</b></div><div class="v16-kpi">Vues produits<b id="v16Views">0</b></div><div class="v16-kpi">Ajouts panier<b id="v16Adds">0</b></div><div class="v16-kpi">Commandes<b id="v16Orders">0</b></div></div><div class="v16-two"><div class="v16-box"><h3>🔥 Produits populaires</h3><div class="v16-list" id="v16Popular"></div></div><div class="v16-box"><h3>⚠️ Alertes</h3><div id="v16Alerts"></div></div></div><div class="v16-box"><h3>📈 Activité récente</h3><div class="v16-list" id="v16Recent"></div></div></section>
+<section class="v16-section" data-v16-section="products"><div class="admin-actions"><button class="primary" onclick="newPremiumProduct()">➕ Ajouter un produit</button><button class="btn" onclick="v16RefreshProducts()">🔄 Actualiser</button><button class="btn" onclick="v16ExportCatalogCSV()">📊 Exporter CSV</button><button class="btn" onclick="v16ExportBackup()">💾 Sauvegarder la boutique</button><button class="btn" onclick="document.getElementById('v16BackupFile').click()">📥 Restaurer une sauvegarde</button><input accept="application/json,.json" id="v16BackupFile" onchange="v16ImportBackup(event)" style="display:none" type="file"/></div><p class="v16-help">Les modifications locales et les sauvegardes sont enregistrées dans ce navigateur. Elles ne sont pas automatiquement synchronisées avec les autres appareils ou visiteurs.</p><div class="admin-grid" id="premiumList"></div></section>
+<section class="v16-section" data-v16-section="site"><div class="v16-box"><h3>✏️ Contenu du site</h3><div class="v16-form"><label>Titre HERO<input id="v16HeroTitle" placeholder="PORTE TON LOGANATOR."/></label><label>Sous-titre<input id="v16HeroText" placeholder="La boutique officielle…"/></label><label>Bouton principal<input id="v16HeroButton" placeholder="VOIR LA COLLECTION"/></label><label>Texte bannière<input id="v16BannerText" placeholder="LIVRAISON OFFERTE…"/></label><label class="full">Message DROP<textarea id="v16DropText"></textarea></label></div></div><div class="v16-box"><h3>🧩 Sections</h3><div class="v16-switch"><span>Afficher les nouveautés</span><input checked="" id="v16ShowNew" type="checkbox"/></div><div class="v16-switch"><span>Afficher les populaires</span><input checked="" id="v16ShowPopular" type="checkbox"/></div><div class="v16-switch"><span>Afficher les promotions</span><input checked="" id="v16ShowPromos" type="checkbox"/></div><div class="v16-switch"><span>Afficher le DROP</span><input checked="" id="v16ShowDrop" type="checkbox"/></div></div><div class="v16-preview"><b>👁️ Prévisualisation</b><h2 id="v16PreviewTitle">PORTE TON LOGANATRICE.</h2><p class="muted" id="v16PreviewText">La boutique officielle LOGANATRICE.</p><button class="primary" id="v16PreviewButton">VOIR LA COLLECTION</button></div><div class="v16-publish"><button class="btn" onclick="v16SaveDraft()">💾 Enregistrer brouillon</button><button class="primary" onclick="v16PublishDraft()">🚀 Publier</button></div></section>
+<section class="v16-section" data-v16-section="promos"><div class="v16-box"><h3>🏷️ Créer un code promo</h3><div class="v16-form"><label>Code<input id="v16PromoCode" placeholder="LOGAN10"/></label><label>Type<select id="v16PromoType"><option value="percent">Pourcentage</option><option value="fixed">Montant fixe</option></select></label><label>Valeur<input id="v16PromoValue" min="0" step="0.01" type="number"/></label><label>Minimum d'achat<input id="v16PromoMin" min="0" step="0.01" type="number"/></label><label>Date de début<input id="v16PromoStart" type="datetime-local"/></label><label>Date de fin<input id="v16PromoEnd" type="datetime-local"/></label><label>Limite d'utilisations<input id="v16PromoMax" min="1" type="number"/></label><button class="primary full" onclick="v16CreatePromo()">➕ Créer le code</button></div></div><div class="v16-box"><h3>Codes existants</h3><div class="v16-list" id="v16PromoList"></div></div></section>
 <section class="v16-section" data-v16-section="orders"><div class="admin-actions"><button class="btn" onclick="v16LoadOrders()">🔄 Actualiser les commandes</button></div><div class="v16-scroll"><table class="v16-table"><thead><tr><th>Date</th><th>Client</th><th>Total</th><th>Statut</th><th>Paiement</th><th></th></tr></thead><tbody id="v16OrderRows"></tbody></table></div></section>
-<section class="v16-section" data-v16-section="members"><div class="v16-box"><h3>👥 Gestion des membres PREMIUM</h3><div class="admin-actions"><input id="premiumMemberEmail" type="email" placeholder="nouveau@email.com" style="flex:1;min-width:220px;padding:12px;border:1px solid var(--line);border-radius:10px;background:#09090d;color:#fff"><button class="primary" onclick="addPremiumMember()">➕ AJOUTER</button></div><div id="premiumMembersList" class="admin-grid"></div></div></section>
+<section class="v16-section" data-v16-section="members"><div class="v16-box"><h3>👥 Gestion des membres PREMIUM</h3><div class="admin-actions"><input id="premiumMemberEmail" placeholder="nouveau@email.com" style="flex:1;min-width:220px;padding:12px;border:1px solid var(--line);border-radius:10px;background:#09090d;color:#fff" type="email"/><button class="primary" onclick="addPremiumMember()">➕ AJOUTER</button></div><div class="admin-grid" id="premiumMembersList"></div></div></section>
 <section class="v16-section" data-v16-section="tools"><div class="v16-two"><div class="v16-box"><h3>🧠 Assistant boutique</h3><div id="v16SmartTools"></div></div><div class="v16-box"><h3>🧹 Contrôle qualité</h3><div id="v16Quality"></div></div></div><div class="v16-box"><h3>🛡️ Sécurité</h3><p class="v16-help">Les écritures Premium sont prévues pour être protégées par Supabase RLS via la migration <b>premium_v16.sql</b>. Le navigateur ne doit jamais contenir de clé service-role.</p></div></section>
 <div class="admin-actions" style="margin-top:18px"><button class="btn" onclick="premiumLogout()">Se déconnecter</button></div></div></div>
-<div class="admin-modal" id="premiumEditor" onclick="if(event.target===this)closeEditor()"><div class="admin-box"><button class="admin-close" onclick="closeEditor()">×</button><span class="premium">👑 PREMIUM</span><h2 id="premiumEditorTitle">Modifier un produit</h2><form class="admin-form" id="premiumForm"><input type="hidden" id="premiumId"><label class="full">Nom<input id="premiumName" required></label><label>Prix (€)<input id="premiumPrice" type="number" step="0.01" min="0" required></label><label>Prix avant promo (€)<input id="premiumCompare" type="number" step="0.01" min="0"></label><label>Catégorie<select id="premiumCat"><option>Hauts</option><option>Doudounes</option><option>Bas</option><option>Chaussures</option></select></label><label>Stock<input id="premiumStock" type="number" min="0" value="0"></label><label class="full">Tailles (séparées par des virgules)<input id="premiumSizes" placeholder="XS,S,M,L,XL"></label><label>Badge<select id="premiumBadge"><option value="">Aucun</option><option>NEW</option><option>PROMO</option><option>BEST-SELLER</option><option>ÉPUISÉ</option></select></label><label>Publication<input id="premiumPublishAt" type="datetime-local"></label><label class="full">Description<textarea id="premiumDetails"></textarea></label><label class="full">Image<input id="premiumImage" type="file" accept="image/*"></label><label><input id="premiumFeatured" type="checkbox"> ⭐ Produit à la une</label><label><input id="premiumPopular" type="checkbox"> 🔥 Produit populaire</label><label><input id="premiumNew" type="checkbox" checked> 🆕 Nouveauté</label><label><input id="premiumPublished" type="checkbox" checked> 👁️ Publié</label><button class="primary full" type="submit">💾 ENREGISTRER</button></form></div></div>
+<div class="admin-modal" id="premiumEditor" onclick="if(event.target===this)closeEditor()"><div class="admin-box"><button class="admin-close" onclick="closeEditor()">×</button><span class="premium">👑 PREMIUM</span><h2 id="premiumEditorTitle">Modifier un produit</h2><form class="admin-form" id="premiumForm"><input id="premiumId" type="hidden"/><label class="full">Nom<input id="premiumName" required=""/></label><label>Prix (€)<input id="premiumPrice" min="0" required="" step="0.01" type="number"/></label><label>Prix avant promo (€)<input id="premiumCompare" min="0" step="0.01" type="number"/></label><label>Catégorie<select id="premiumCat"><option>Hauts</option><option>Doudounes</option><option>Bas</option><option>Chaussures</option></select></label><label>Stock<input id="premiumStock" min="0" type="number" value="0"/></label><label class="full">Tailles (séparées par des virgules)<input id="premiumSizes" placeholder="XS,S,M,L,XL"/></label><label>Badge<select id="premiumBadge"><option value="">Aucun</option><option>NEW</option><option>PROMO</option><option>BEST-SELLER</option><option>ÉPUISÉ</option></select></label><label>Publication<input id="premiumPublishAt" type="datetime-local"/></label><label class="full">Description<textarea id="premiumDetails"></textarea></label><label class="full">Image<input accept="image/*" id="premiumImage" type="file"/></label><label><input id="premiumFeatured" type="checkbox"/> ⭐ Produit à la une</label><label><input id="premiumPopular" type="checkbox"/> 🔥 Produit populaire</label><label><input checked="" id="premiumNew" type="checkbox"/> 🆕 Nouveauté</label><label><input checked="" id="premiumPublished" type="checkbox"/> 👁️ Publié</label><button class="primary full" type="submit">💾 ENREGISTRER</button></form></div></div>
 <div class="admin-modal" id="premiumMembersModal" style="display:none"></div>
 <script>
 const LOGANATOR_SUPABASE_URL="https://aidaqphingkvvevgbeyk.supabase.co";
@@ -448,7 +370,7 @@ function renderPremiumList(){const box=document.getElementById('premiumList');if
 const _editPremiumProduct=window.editPremiumProduct;window.editPremiumProduct=function(id){const p=products.find(x=>String(x.id)===String(id));if(!p)return;document.getElementById('premiumEditorTitle').textContent='Modifier un produit';document.getElementById('premiumId').value=id;document.getElementById('premiumName').value=p.name||'';document.getElementById('premiumPrice').value=p.price||0;document.getElementById('premiumCompare').value=p.compare_at_price||'';document.getElementById('premiumCat').value=normalizeCategory(p.cat)||'Hauts';document.getElementById('premiumStock').value=p.stock??0;document.getElementById('premiumSizes').value=(p.sizes||sizes(p)).join(',');document.getElementById('premiumBadge').value=p.badge||'';document.getElementById('premiumDetails').value=p.description||((p.details||[]).join('\n'));document.getElementById('premiumFeatured').checked=!!p.is_featured;document.getElementById('premiumPopular').checked=!!p.is_popular;document.getElementById('premiumNew').checked=p.is_new!==false;document.getElementById('premiumPublished').checked=p.is_published!==false;document.getElementById('premiumPublishAt').value=p.publish_at?new Date(p.publish_at).toISOString().slice(0,16):'';document.getElementById('premiumImage').value='';document.getElementById('premiumEditor').classList.add('open')};
 const _newPremiumProduct=window.newPremiumProduct;window.newPremiumProduct=function(){document.getElementById('premiumEditorTitle').textContent='Ajouter un produit';['premiumId','premiumName','premiumCompare','premiumPublishAt','premiumDetails'].forEach(id=>document.getElementById(id).value='');document.getElementById('premiumPrice').value=0;document.getElementById('premiumCat').value='Hauts';document.getElementById('premiumStock').value=0;document.getElementById('premiumSizes').value='XS,S,M,L,XL';document.getElementById('premiumBadge').value='';document.getElementById('premiumFeatured').checked=false;document.getElementById('premiumPopular').checked=false;document.getElementById('premiumNew').checked=true;document.getElementById('premiumPublished').checked=true;document.getElementById('premiumImage').value='';document.getElementById('premiumEditor').classList.add('open')};
 const oldSubmit=document.getElementById('premiumForm');oldSubmit.addEventListener('submit',async e=>{e.preventDefault();if(!v16Can())return alert('Accès Premium requis.');const id=document.getElementById('premiumId').value;const payload={name:document.getElementById('premiumName').value.trim(),price:Number(document.getElementById('premiumPrice').value),category:document.getElementById('premiumCat').value,description:document.getElementById('premiumDetails').value.trim(),stock:Number(document.getElementById('premiumStock').value)||0,sizes:document.getElementById('premiumSizes').value.split(',').map(x=>x.trim()).filter(Boolean),badge:document.getElementById('premiumBadge').value||null,is_featured:document.getElementById('premiumFeatured').checked,is_popular:document.getElementById('premiumPopular').checked,is_new:document.getElementById('premiumNew').checked,is_published:document.getElementById('premiumPublished').checked,publish_at:document.getElementById('premiumPublishAt').value?new Date(document.getElementById('premiumPublishAt').value).toISOString():null,compare_at_price:document.getElementById('premiumCompare').value?Number(document.getElementById('premiumCompare').value):null};const file=document.getElementById('premiumImage').files[0];try{if(file)payload.image_url=await v12Upload(file);let r=id?await LOGANATOR_SB.from('products').update(payload).eq('id',id):await LOGANATOR_SB.from('products').insert(payload);if(r.error)throw r.error;const pid=id||r.data?.[0]?.id;if(pid)await LOGANATOR_SB.from('product_meta').upsert({product_id:pid,stock:payload.stock,sizes:payload.sizes,badge:payload.badge,is_featured:payload.is_featured,is_popular:payload.is_popular,is_new:payload.is_new,is_published:payload.is_published,publish_at:payload.publish_at,compare_at_price:payload.compare_at_price,updated_at:new Date().toISOString()});closeEditor();await v12LoadProducts();render();renderPremiumList();v16Notice('✅ Produit enregistré.',true)}catch(err){alert('Erreur : '+err.message)}});
-async function v16LoadSettings(){if(!v16Can())return;const {data,error}=await LOGANATOR_SB.from('store_settings').select('*').eq('id',1).maybeSingle();if(error||!data)return;const x=data.draft||{};document.getElementById('v16HeroTitle').value=x.heroTitle||'PORTE TON LOGANATOR.';document.getElementById('v16HeroText').value=x.heroText||'La boutique LOGANATOR en version rose, brillante et pleine de paillettes.';document.getElementById('v16HeroButton').value=x.heroButton||'VOIR LA COLLECTION';document.getElementById('v16BannerText').value=x.bannerText||'🚚 LIVRAISON OFFERTE À PARTIR DE 80€';document.getElementById('v16DropText').value=x.dropText||'';['New','Popular','Promos','Drop'].forEach(k=>{const el=document.getElementById('v16Show'+k);if(el)el.checked=x['show'+k]!==false});v16PreviewSettings()}
+async function v16LoadSettings(){if(!v16Can())return;const {data,error}=await LOGANATOR_SB.from('store_settings').select('*').eq('id',1).maybeSingle();if(error||!data)return;const x=data.draft||{};document.getElementById('v16HeroTitle').value=x.heroTitle||'PORTE TON LOGANATOR.';document.getElementById('v16HeroText').value=x.heroText||'La boutique de la chaîne, avec les vraies photos de tes créations.';document.getElementById('v16HeroButton').value=x.heroButton||'VOIR LA COLLECTION';document.getElementById('v16BannerText').value=x.bannerText||'🚚 LIVRAISON OFFERTE À PARTIR DE 80€';document.getElementById('v16DropText').value=x.dropText||'';['New','Popular','Promos','Drop'].forEach(k=>{const el=document.getElementById('v16Show'+k);if(el)el.checked=x['show'+k]!==false});v16PreviewSettings()}
 function v16SettingsObj(){return {heroTitle:document.getElementById('v16HeroTitle').value,heroText:document.getElementById('v16HeroText').value,heroButton:document.getElementById('v16HeroButton').value,bannerText:document.getElementById('v16BannerText').value,dropText:document.getElementById('v16DropText').value,showNew:document.getElementById('v16ShowNew').checked,showPopular:document.getElementById('v16ShowPopular').checked,showPromos:document.getElementById('v16ShowPromos').checked,showDrop:document.getElementById('v16ShowDrop').checked}}
 function v16PreviewSettings(){const x=v16SettingsObj();document.getElementById('v16PreviewTitle').textContent=x.heroTitle;document.getElementById('v16PreviewText').textContent=x.heroText;document.getElementById('v16PreviewButton').textContent=x.heroButton}
 ['v16HeroTitle','v16HeroText','v16HeroButton','v16BannerText','v16DropText','v16ShowNew','v16ShowPopular','v16ShowPromos','v16ShowDrop'].forEach(id=>document.getElementById(id)?.addEventListener('input',v16PreviewSettings));
@@ -463,7 +385,6 @@ async function v16ViewOrder(id){const {data,error}=await LOGANATOR_SB.from('orde
 async function v16LoadTools(){if(!v16Can())return;const low=products.filter(p=>Number(p.stock??0)<=3);const missing=products.filter(p=>!p.description||!p.image);document.getElementById('v16SmartTools').innerHTML=`<div class="v16-line">🔥 Produits à mettre en avant <b>${products.filter(p=>p.is_popular||p.is_featured).length}</b></div><div class="v16-line">⚠️ Stocks faibles <b>${low.length}</b></div><div class="v16-line">📝 Fiches à compléter <b>${missing.length}</b></div><div class="v16-line">🆕 Nouveautés <b>${products.filter(p=>p.is_new!==false).length}</b></div>`;document.getElementById('v16Quality').innerHTML=products.map(p=>{const issues=[];if(!p.name)issues.push('nom');if(!p.description)issues.push('description');if(!p.image)issues.push('image');if(Number(p.price)<=0)issues.push('prix');return `<div class="v16-line"><span>${v16Esc(p.name)}</span><span class="${issues.length?'v16-danger':'v16-good'}">${issues.length?'⚠️ '+issues.join(', '):'✅ OK'}</span></div>`}).join('')}
 const _openPremium=window.openPremium;window.openPremium=async function(){if(!v16Can())return alert('Accès réservé aux membres PREMIUM 👑');await v12LoadProducts();render();renderPremiumList();document.getElementById('premiumModal').classList.add('open');v16LoadStats();v16LoadSettings();v16LoadPromos();v16LoadTools()};
 </script>
-
 <script>
 /* LOGANATOR V16.1 ZERO SUPABASE SETUP
    Premium extras are stored locally in this browser. No SQL/table/RLS is required.
@@ -569,7 +490,7 @@ const _openPremium=window.openPremium;window.openPremium=async function(){if(!v1
   window.v16ImportBackup=function(event){if(!can())return alert('Accès Premium requis.');const file=event.target.files&&event.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const data=JSON.parse(reader.result);if(data.format!=='LOGANATOR-SHOP-BACKUP'||!data.local_store)throw new Error('Ce fichier ne semble pas être une sauvegarde LOGANATOR valide.');if(!confirm('Restaurer cette sauvegarde locale ? Les données locales actuelles seront remplacées.'))return;store={...data.local_store};store.products=Array.isArray(store.products)?store.products:[];store.settings=store.settings||{};store.promos=Array.isArray(store.promos)?store.promos:[];store.orders=Array.isArray(store.orders)?store.orders:[];store.members=Array.isArray(store.members)?store.members:[];store.events=Array.isArray(store.events)?store.events:[];save(store);if(Array.isArray(data.products))products.splice(0,products.length,...data.products);applyMeta();render();renderPremiumList();v16LoadSettings();v16LoadPromos();v16LoadOrders();v16LoadStats();v16LoadTools();loadPremiumMembers();notice('✅ Sauvegarde restaurée dans ce navigateur.',true)}catch(err){alert('Impossible de restaurer : '+err.message)}finally{event.target.value=''}};reader.readAsText(file)};
 
   // Site editor: local draft + local published copy.
-  window.v16LoadSettings=function(){if(!can())return;const x=store.settings.draft||{};document.getElementById('v16HeroTitle').value=x.heroTitle||'PORTE TON LOGANATOR.';document.getElementById('v16HeroText').value=x.heroText||'La boutique LOGANATOR en version rose, brillante et pleine de paillettes.';document.getElementById('v16HeroButton').value=x.heroButton||'VOIR LA COLLECTION';document.getElementById('v16BannerText').value=x.bannerText||'🚚 LIVRAISON OFFERTE À PARTIR DE 80€';document.getElementById('v16DropText').value=x.dropText||'';['New','Popular','Promos','Drop'].forEach(k=>{const el=document.getElementById('v16Show'+k);if(el)el.checked=x['show'+k]!==false});v16PreviewSettings()};
+  window.v16LoadSettings=function(){if(!can())return;const x=store.settings.draft||{};document.getElementById('v16HeroTitle').value=x.heroTitle||'PORTE TON LOGANATOR.';document.getElementById('v16HeroText').value=x.heroText||'La boutique de la chaîne, avec les vraies photos de tes créations.';document.getElementById('v16HeroButton').value=x.heroButton||'VOIR LA COLLECTION';document.getElementById('v16BannerText').value=x.bannerText||'🚚 LIVRAISON OFFERTE À PARTIR DE 80€';document.getElementById('v16DropText').value=x.dropText||'';['New','Popular','Promos','Drop'].forEach(k=>{const el=document.getElementById('v16Show'+k);if(el)el.checked=x['show'+k]!==false});v16PreviewSettings()};
   window.v16SaveDraft=function(){if(!can())return;store.settings.draft=v16SettingsObj();save(store);notice('💾 Brouillon enregistré dans ce navigateur.',true)};
   window.v16PublishDraft=function(){if(!can())return;store.settings.published=v16SettingsObj();store.settings.draft=store.settings.published;save(store);notice('🚀 Publication locale terminée. Aucun SQL nécessaire.',true)};
 
