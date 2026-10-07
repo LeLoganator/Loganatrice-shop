@@ -1,0 +1,52 @@
+LOGANATRICE V29.1 — TOUTES LES IMAGES EN PNG
+
+Nombre total : 46 PNG
+Tous les fichiers sont à la racine du ZIP.
+Aucun JPG/JPEG/WEBP/GIF/BMP/TIF/TIFF/SVG.
+
+accessoires-back.png
+accessoires-front.png
+accessoires-left.png
+accessoires-right.png
+accessoires.png
+casque-bluetooth-back.png
+casque-bluetooth-front.png
+casque-bluetooth-left.png
+casque-bluetooth-right.png
+casque-bluetooth.png
+casquette-back.png
+casquette-front.png
+casquette-left.png
+casquette-right.png
+casquette.png
+doudoune-back.png
+doudoune-front.png
+doudoune-left.png
+doudoune-right.png
+doudoune.png
+jupe-back.png
+jupe-front.png
+jupe-left.png
+jupe-right.png
+jupe.png
+logo-L-paillete-rose.png
+robe-courte-back.png
+robe-courte-front.png
+robe-courte-left.png
+robe-courte-right.png
+robe-courte.png
+robe-longue-back.png
+robe-longue-front.png
+robe-longue-left.png
+robe-longue-right.png
+robe-longue.png
+sac-back.png
+sac-front.png
+sac-left.png
+sac-right.png
+sac.png
+talons-back.png
+talons-front.png
+talons-left.png
+talons-right.png
+talons.png
