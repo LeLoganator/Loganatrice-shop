@@ -75,7 +75,7 @@ main{max-width:1500px;margin:auto;padding:0 3% 60px}.toolbar{display:flex;justif
 
 <script>
 const PRODUCTS = [{"id": "talons", "name": "Talons Loganatrice", "price": "79,99 €", "sizes": ["35", "36", "37", "38", "39", "40", "41"], "desc": "Talons rose pailleté avec logo Loganatrice.", "cat": "Talons", "images": ["talons.png"]}, {"id": "robe-courte", "name": "Robe courte Loganatrice", "price": "59,99 €", "sizes": ["XS", "S", "M", "L", "XL"], "desc": "Robe courte entièrement rose pailleté, sans logo.", "cat": "Robes", "images": ["robe-courte.png"]}, {"id": "robe-longue", "name": "Robe longue Loganatrice", "price": "89,99 €", "sizes": ["XS", "S", "M", "L", "XL"], "desc": "Robe longue rose pailleté, coupe élégante, sans logo.", "cat": "Robes", "images": ["robe-longue.png"]}, {"id": "jupe", "name": "Jupe Loganatrice", "price": "49,99 €", "sizes": ["XS", "S", "M", "L", "XL"], "desc": "Jupe rose pailleté assortie à la collection.", "cat": "Jupes", "images": ["jupe.png"]}, {"id": "casquette", "name": "Casquette Loganatrice", "price": "24,99 €", "sizes": ["Unique"], "desc": "Casquette rose pailleté avec logo de la boutique.", "cat": "Casquettes", "images": ["casquette.png"]}, {"id": "casque-bluetooth", "name": "Casque Bluetooth Loganatrice", "price": "89,99 €", "sizes": ["Unique"], "desc": "Casque Bluetooth rose pailleté avec logo Loganatrice.", "cat": "Casques", "images": ["casque-bluetooth.png"]}, {"id": "sac", "name": "Sac Loganatrice", "price": "54,99 €", "sizes": ["Unique"], "desc": "Sac rose pailleté avec logo Loganatrice.", "cat": "Sacs", "images": ["sac.png"]}, {"id": "accessoires", "name": "Set d'accessoires Loganatrice", "price": "29,99 €", "sizes": ["Unique"], "desc": "Set d'accessoires rose pailleté.", "cat": "Accessoires", "images": ["accessoires.png"]}, {"id": "doudoune", "name": "Doudoune Loganatrice", "price": "99,99 €", "sizes": ["XS", "S", "M", "L", "XL"], "desc": "Doudoune rose pailleté avec logo Loganatrice.", "cat": "Doudounes", "images": ["doudoune.png"]}];
-const cats=["Tous",...new Set(PRODUCTS.map(p=>p.cat))];
+let cats=["Tous",...new Set(PRODUCTS.map(p=>p.cat))];
 let currentCat="Tous", currentProduct=null, currentImage=0, currentSize=null, qty=1;
 let cart=JSON.parse(localStorage.getItem("loganatrice_cart")||"[]");
 let favs=JSON.parse(localStorage.getItem("loganatrice_favs")||"[]");
@@ -165,7 +165,7 @@ setup();
       const isPrem=await premium(user);title.textContent='Mon compte';
       area.innerHTML=`<p>Connecté avec <b>${safe(user.email)}</b>.</p><div class="account-note">${isPrem?'👑 <b>Compte PREMIUM détecté.</b> Ton espace Premium est disponible.':'💗 Ton compte Loganatrice est bien connecté.'}</div><div class="account-actions">${isPrem?'<button class="cta" type="button" id="accountPremium">👑 Ouvrir Premium</button>':''}<button class="filter" type="button" id="accountLogout">Se déconnecter</button></div>`;
       el('accountLogout').onclick=async()=>{const sb=ensureClient();if(sb)await sb.auth.signOut();window.LOGANATOR_USER=null;refreshAccount();updateAccountButton()};
-      const pb=el('accountPremium');if(pb)pb.onclick=()=>toast('Espace Premium à connecter à la version complète.');
+      const pb=el('accountPremium');if(pb)pb.onclick=()=>toast('👑 Le Control Center Premium des deux boutiques est disponible dans LOGANATOR.');
     }else{
       title.textContent='Connexion / création de compte';
       area.innerHTML=`<div class="field"><label>Adresse e-mail</label><input id="accountEmail" type="email" autocomplete="email" placeholder="ton@email.com"></div><div class="field"><label>Mot de passe</label><input id="accountPassword" type="password" autocomplete="current-password" placeholder="••••••••"></div><div class="account-actions"><button class="cta" type="button" id="accountLogin">Se connecter</button><button class="filter" type="button" id="accountSignup">Créer un compte</button><button class="filter" type="button" id="accountReset">Mot de passe oublié</button></div><div class="account-note" id="accountMsg">Les comptes sont gérés par Supabase.</div>`;
@@ -198,4 +198,57 @@ setup();
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
 })();
 </script>
+
+<script id="loganatrice-cloud-storefront">
+(function(){
+'use strict';
+const URL='https://aidaqphingkvvevgbeyk.supabase.co';
+const KEY='sb_publishable_g3yTfPLGBasbLU4Q3LEi0w_P6b8ROLM';
+let sb=null;
+function client(){try{if(!sb&&window.supabase)sb=window.supabase.createClient(URL,KEY,{auth:{persistSession:true,autoRefreshToken:true}});return sb}catch(e){return null}}
+function publishedStore(row){
+  const d=(row?.published&&typeof row.published==='object')?row.published:row?.draft;
+  return d?.__multiStore?.loganatrice||row?.draft?.__multiStore?.loganatrice||null;
+}
+function normalize(p){
+  const price=Number(p.price)||0;
+  return {
+    id:String(p.id),name:p.name||'Produit Loganatrice',price:price.toFixed(2).replace('.',',')+' €',
+    sizes:Array.isArray(p.sizes)&&p.sizes.length?p.sizes:['Unique'],
+    desc:p.description||((p.details||[]).join('\n'))||'',cat:p.cat||p.category||'Produits',
+    images:Array.isArray(p.images)&&p.images.length?p.images:[p.image||p.image_url].filter(Boolean)
+  };
+}
+async function loadCloudStore(){
+  const c=client();if(!c)return;
+  try{
+    const r=await c.from('store_settings').select('draft,published').eq('id',1).maybeSingle();
+    if(r.error||!r.data)return;
+    const store=publishedStore(r.data);if(!store)return;
+    if(Array.isArray(store.catalog)&&store.catalog.length){
+      const mapped=store.catalog.filter(x=>x.is_published!==false).map(normalize);
+      if(mapped.length){
+        PRODUCTS.splice(0,PRODUCTS.length,...mapped);
+        cats=["Tous",...new Set(PRODUCTS.map(p=>p.cat))];
+        currentCat="Tous";
+        if(typeof setup==='function')setup();
+        if(typeof render==='function')render();
+        if(typeof updateCartCount==='function')updateCartCount();
+      }
+    }
+    const x=store.settings||{};
+    const heroTitle=document.querySelector('.hero h1');
+    const heroText=document.querySelector('.hero p');
+    const heroButton=document.querySelector('.hero .cta');
+    if(heroTitle&&x.heroTitle)heroTitle.textContent=x.heroTitle;
+    if(heroText&&x.heroText)heroText.textContent=x.heroText;
+    if(heroButton&&x.heroButton)heroButton.textContent=x.heroButton+' →';
+  }catch(e){console.warn('Loganatrice cloud store:',e)}
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(loadCloudStore,300),{once:true});
+else setTimeout(loadCloudStore,300);
+window.loganatriceReloadCloudStore=loadCloudStore;
+})();
+</script>
+
 </body></html>
